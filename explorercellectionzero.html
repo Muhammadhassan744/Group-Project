@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Explore Collections | Zero Lifestyle</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Outfit:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg: #000000;
+            --card-bg: #0a0a0a;
+            --accent: #00ffcc;
+            --text-main: #ffffff;
+            --text-dim: #a1a1aa;
+            --glass: rgba(255, 255, 255, 0.05);
+            --transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg);
+            color: var(--text-main);
+            overflow-x: hidden;
+            padding-top: 80px;
+        }
+
+        /* --- Navigation --- */
+        nav {
+            position: fixed; top: 0; width: 100%; z-index: 1000;
+            padding: 20px 5%; display: flex; justify-content: space-between; align-items: center;
+            background: rgba(0, 0, 0, 0.9); backdrop-filter: blur(15px); border-bottom: 1px solid var(--glass);
+        }
+        .logo { font-family: 'Outfit'; font-size: 1.5rem; text-decoration: none; color: white; letter-spacing: 2px; }
+        .logo span { color: var(--accent); }
+        .cart-icon { position: relative; color: white; text-decoration: none; font-size: 1.2rem; }
+        #cart-count { position: absolute; top: -10px; right: -10px; background: var(--accent); color: black; font-size: 10px; padding: 2px 6px; border-radius: 50%; font-weight: 800; }
+
+        /* --- Explore Header --- */
+        .explorer-header {
+            height: 40vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: radial-gradient(circle at top, #111 0%, #000 100%);
+            border-bottom: 1px solid var(--glass);
+        }
+
+        .explorer-header h1 {
+            font-family: 'Outfit';
+            font-size: clamp(2.5rem, 8vw, 4rem);
+            letter-spacing: -1px;
+            margin-bottom: 15px;
+        }
+
+        .filter-pills {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .pill {
+            padding: 8px 20px;
+            border-radius: 50px;
+            border: 1px solid var(--glass);
+            color: var(--text-dim);
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .pill.active, .pill:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            background: rgba(0, 255, 204, 0.05);
+        }
+
+        /* --- Explorer Grid --- */
+        .explorer-container {
+            max-width: 1400px;
+            margin: 60px auto;
+            padding: 0 5%;
+        }
+
+        .explorer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 40px;
+        }
+
+        .explorer-card {
+            position: relative;
+            border-radius: 24px;
+            overflow: hidden;
+            background: var(--card-bg);
+            border: 1px solid var(--glass);
+            transition: var(--transition);
+        }
+
+        .explorer-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--accent);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.8);
+        }
+
+        .img-box {
+            height: 350px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(180deg, #0a0a0a 0%, #111 100%);
+            overflow: hidden;
+        }
+
+        .img-box img {
+            width: 70%;
+            transition: var(--transition);
+        }
+
+        .explorer-card:hover .img-box img {
+            transform: scale(1.1) rotate(3deg);
+        }
+
+        /* --- Card Content --- */
+        .card-overlay {
+            padding: 30px;
+            background: linear-gradient(to top, rgba(0,0,0,1) 0%, transparent 100%);
+        }
+
+        .product-cat {
+            font-size: 0.7rem;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 800;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .product-name {
+            font-family: 'Outfit';
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+
+        .product-desc {
+            font-size: 0.9rem;
+            color: var(--text-dim);
+            margin-bottom: 25px;
+            line-height: 1.5;
+            height: 45px;
+            overflow: hidden;
+        }
+
+        .explore-action {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .price-tag {
+            font-size: 1.4rem;
+            font-weight: 700;
+        }
+
+        .add-cart-btn {
+            width: 50px;
+            height: 50px;
+            background: var(--text-main);
+            color: #000;
+            border: none;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .explorer-card:hover .add-cart-btn {
+            background: var(--accent);
+            transform: scale(1.1);
+        }
+
+        /* --- Toast Popup --- */
+        .toast {
+            position: fixed; bottom: 30px; right: 30px;
+            background: #111; border: 1px solid var(--accent);
+            padding: 15px 25px; border-radius: 12px; z-index: 2000;
+            transform: translateX(150%); transition: 0.5s;
+        }
+        .toast.active { transform: translateX(0); }
+
+        footer {
+            padding: 100px 5%;
+            text-align: center;
+            border-top: 1px solid var(--glass);
+            color: var(--text-dim);
+        }
+
+        @media (max-width: 768px) {
+            .explorer-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="homezero.html" class="logo">ZERO<span>.</span></a>
+        <a href="checkautzero.html" class="cart-icon">
+            <i class="fa-solid fa-cart-shopping"></i>
+            <span id="cart-count">0</span>
+        </a>
+    </nav>
+
+    <header class="explorer-header">
+        <p style="text-transform: uppercase; letter-spacing: 3px; font-size: 0.7rem; color: var(--accent);">Our Universe</p>
+        <h1>EXPLORE ALL.</h1>
+        <div class="filter-pills">
+            <div class="pill active" onclick="filterItems('All Products')">All Products</div>
+            <div class="pill" onclick="filterItems('Audio')">Audio</div>
+            <div class="pill" onclick="filterItems('Wearables')">Wearables</div>
+            
+        </div>
+    </header>
+
+    <main class="explorer-container">
+        <div class="explorer-grid" id="productGrid">
+
+            <div class="explorer-card" data-category="Wearables">
+                <div class="img-box">
+                    <img src="https://zerolifestyle.co/cdn/shop/files/01_fdba08f1-6dfb-44a1-bfe7-462b8adc9d5b.webp?v=1734678583&width=700" alt="Titan">
+                </div>
+                <div class="card-overlay">
+                    <span class="product-cat">Wearables</span>
+                    <h2 class="product-name">Titan Pro Max</h2>
+                    <p class="product-desc">The pinnacle of wearable tech. Titanium casing.</p>
+                    <div class="explore-action">
+                        <span class="price-tag">Rs. 18,500</span>
+                        <button class="add-cart-btn" onclick="addToCart('Titan Pro Max', 18500, 'https://zerolifestyle.co/cdn/shop/files/01_fdba08f1-6dfb-44a1-bfe7-462b8adc9d5b.webp?v=1734678583&width=700')">
+                            <i class="fa-solid fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="explorer-card" data-category="Audio">
+                <div class="img-box">
+                    <img src="https://zerolifestyle.co/cdn/shop/files/Zero_Quantum_Green_01_1.webp?v=1720007567&width=700" alt="Sonic">
+                </div>
+                <div class="card-overlay">
+                    <span class="product-cat">Audio</span>
+                    <h2 class="product-name">Sonic Elite X</h2>
+                    <p class="product-desc">Pure sound, zero distraction. Advanced hybrid ANC.</p>
+                    <div class="explore-action">
+                        <span class="price-tag">Rs. 9,200</span>
+                        <button class="add-cart-btn" onclick="addToCart('Sonic Elite X', 9200, 'https://zerolifestyle.co/cdn/shop/files/Zero_Quantum_Green_01_1.webp?v=1720007567&width=700')">
+                            <i class="fa-solid fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="explorer-card" data-category="Wearables">
+                <div class="img-box">
+                    <img src="https://zerolifestyle.co/cdn/shop/files/Black_4_c986e7b0-a61c-41d3-a8ce-4a469882bade.webp?v=1752432598&width=700" alt="Volt">
+                </div>
+                <div class="card-overlay">
+                    <span class="product-cat">Wearables</span>
+                    <h2 class="product-name">Volt Ultra 30K</h2>
+                    <p class="product-desc">1.38 Wide Display | 100+ Sports Mode.</p>
+                    <div class="explore-action">
+                        <span class="price-tag">Rs. 6,800</span>
+                        <button class="add-cart-btn" onclick="addToCart('Volt Ultra 30K', 6800, 'https://zerolifestyle.co/cdn/shop/files/Black_4_c986e7b0-a61c-41d3-a8ce-4a469882bade.webp?v=1752432598&width=700')">
+                            <i class="fa-solid fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <div id="toast" class="toast">Product added to cart!</div>
+
+    <footer>
+        <p>&copy; 2026 ZERO LIFESTYLE. DISCOVER THE FUTURE.</p>
+    </footer>
+
+    <script>
+        // 1. FILTER FUNCTIONALITY
+        function filterItems(category) {
+            // Update UI (Pills)
+            const pills = document.querySelectorAll('.pill');
+            pills.forEach(p => p.classList.remove('active'));
+            event.target.classList.add('active');
+
+            // Filter Logic
+            const cards = document.querySelectorAll('.explorer-card');
+            cards.forEach(card => {
+                const itemCat = card.getAttribute('data-category');
+                if (category === 'All Products' || itemCat === category) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // 2. ADD TO CART FUNCTIONALITY
+        function addToCart(name, price, image) {
+            let cart = JSON.parse(localStorage.getItem("cart")) || [];
+            
+            // Check if item exists
+            let existing = cart.find(item => item.name === name);
+            if(existing) {
+                existing.qty += 1;
+            } else {
+                cart.push({ name, price, image, qty: 1 });
+            }
+
+            localStorage.setItem("cart", JSON.stringify(cart));
+            
+            // Show Feedback
+            showToast(name + " Added!");
+            updateCartCount();
+        }
+
+        function updateCartCount() {
+            let cart = JSON.parse(localStorage.getItem("cart")) || [];
+            let total = cart.reduce((acc, item) => acc + item.qty, 0);
+            document.getElementById('cart-count').innerText = total;
+        }
+
+        function showToast(msg) {
+            const t = document.getElementById('toast');
+            t.innerText = msg;
+            t.classList.add('active');
+            setTimeout(() => t.classList.remove('active'), 2500);
+        }
+
+        // Run on Page Load
+        updateCartCount();
+    </script>
+</body>
+</html>

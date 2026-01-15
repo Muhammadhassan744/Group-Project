@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Track Your Order | Zero Lifestyle</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Outfit:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg: #050505;
+            --card-bg: #0f0f0f;
+            --accent: #00ffcc;
+            --text-dim: #94a3b8;
+            --border: rgba(255, 255, 255, 0.08);
+        }
+
+        body {
+            margin: 0;
+            background-color: var(--bg);
+            font-family: 'Inter', sans-serif;
+            color: white;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .track-container {
+            max-width: 800px;
+            width: 100%;
+            background: var(--card-bg);
+            border-radius: 24px;
+            border: 1px solid var(--border);
+            padding: 40px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+        }
+
+        h2 { font-family: 'Outfit', sans-serif; font-size: 2rem; color: var(--accent); margin-bottom: 30px; text-align: center; }
+
+        /* Search Box */
+        .search-box {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 50px;
+            background: rgba(255,255,255,0.03);
+            padding: 10px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+        }
+
+        .search-box input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            color: white;
+            padding: 10px 15px;
+            outline: none;
+            font-size: 1rem;
+        }
+
+        .track-btn {
+            background: var(--accent);
+            color: #000;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .track-btn:hover { transform: scale(1.05); }
+
+        /* Tracking Timeline Animation */
+        .timeline {
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+            margin-top: 40px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            top: 25px;
+            left: 5%;
+            width: 90%;
+            height: 4px;
+            background: #222;
+            z-index: 1;
+        }
+
+        /* Progress line (Animated) */
+        .progress-line {
+            position: absolute;
+            top: 25px;
+            left: 5%;
+            width: 65%; /* This controls the progress percentage */
+            height: 4px;
+            background: var(--accent);
+            z-index: 2;
+            box-shadow: 0 0 15px var(--accent);
+            transition: width 1s ease-in-out;
+        }
+
+        .step {
+            position: relative;
+            z-index: 3;
+            text-align: center;
+            width: 100px;
+        }
+
+        .step-icon {
+            width: 50px;
+            height: 50px;
+            background: #1a1a1a;
+            border: 2px solid #222;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            color: #444;
+            transition: 0.5s;
+        }
+
+        .step.active .step-icon {
+            border-color: var(--accent);
+            color: var(--accent);
+            background: #050505;
+            box-shadow: 0 0 15px var(--accent-glow);
+        }
+
+        .step p { font-size: 0.8rem; color: var(--text-dim); margin: 0; }
+        .step.active p { color: white; font-weight: 600; }
+
+        .order-info {
+            margin-top: 50px;
+            padding: 20px;
+            background: rgba(255,255,255,0.02);
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .info-item label { color: var(--text-dim); font-size: 0.8rem; display: block; margin-bottom: 5px; }
+        .info-item span { font-weight: 600; color: white; }
+
+        @media (max-width: 600px) {
+            .timeline { flex-direction: column; gap: 30px; align-items: flex-start; }
+            .timeline::before, .progress-line { display: none; }
+            .step { display: flex; align-items: center; gap: 20px; text-align: left; width: 100%; }
+            .order-info { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="track-container">
+        <h2><i class="fa-solid fa-location-dot"></i> Track Your Order</h2>
+
+        <div class="search-box">
+            <input type="text" id="orderInput" placeholder="Enter Order ID (e.g. ZERO-12345)">
+            <button class="track-btn" onclick="simulateTrack()">Track Now</button>
+        </div>
+
+        <div id="trackingUI" style="display: none;">
+            <div class="timeline">
+                <div class="progress-line" id="progressLine"></div>
+                
+                <div class="step active">
+                    <div class="step-icon"><i class="fa-solid fa-file-invoice"></i></div>
+                    <p>Ordered</p>
+                </div>
+                
+                <div class="step active">
+                    <div class="step-icon"><i class="fa-solid fa-box-open"></i></div>
+                    <p>Packed</p>
+                </div>
+
+                <div class="step active">
+                    <div class="step-icon"><i class="fa-solid fa-truck-fast"></i></div>
+                    <p>Shipped</p>
+                </div>
+
+                <div class="step">
+                    <div class="step-icon"><i class="fa-solid fa-house-chimney-check"></i></div>
+                    <p>Delivered</p>
+                </div>
+            </div>
+
+            <div class="order-info">
+                <div class="info-item">
+                    <label>Expected Delivery</label>
+                    <span id="deliveryDate">Oct 25, 2023</span>
+                </div>
+                <div class="info-item">
+                    <label>Current Location</label>
+                    <span>Karachi Sorting Hub</span>
+                </div>
+                <div class="info-item">
+                    <label>Carrier</label>
+                    <span>TCS Express / Leopard</span>
+                </div>
+                <div class="info-item">
+                    <label>Status</label>
+                    <span style="color: var(--accent);">In Transit</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function simulateTrack() {
+            const id = document.getElementById('orderInput').value;
+            if(id.length < 5) {
+                alert("Please enter a valid Order ID");
+                return;
+            }
+
+            // UI Show karein
+            document.getElementById('trackingUI').style.display = 'block';
+            
+            // Random dates set karein
+            const date = new Date();
+            date.setDate(date.getDate() + 3);
+            document.getElementById('deliveryDate').innerText = date.toDateString();
+
+            // Progress bar animation trigger
+            setTimeout(() => {
+                document.getElementById('progressLine').style.width = "65%";
+            }, 100);
+        }
+    </script>
+</body>
+</html>

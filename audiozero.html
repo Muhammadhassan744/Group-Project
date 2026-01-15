@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audio | Zero Lifestyle</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Outfit:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg-obsidian: #050505;
+            --bg-card: #0c0c0c;
+            --accent-audio: #a855f7;
+            --text-white: #ffffff;
+            --text-dim: #71717a;
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg-obsidian); color: var(--text-white); overflow-x: hidden; }
+
+        nav {
+            position: fixed; top: 0; width: 100%; z-index: 1000; padding: 20px 5%;
+            display: flex; justify-content: space-between; align-items: center;
+            background: rgba(0, 0, 0, 0.8); backdrop-filter: blur(20px); border-bottom: 1px solid var(--glass-border);
+        }
+
+        .logo { font-family: 'Outfit', sans-serif; font-size: 1.5rem; letter-spacing: 2px; text-transform: uppercase; transition: 0.6s; cursor: pointer; color: white; text-decoration: none; }
+        .logo:hover { transform: rotate(180deg); }
+        .logo span { color: var(--accent-audio); }
+
+        .nav-icons { display: flex; gap: 20px; color: white; }
+        .nav-icons a { color: white; text-decoration: none; position: relative; }
+
+        .audio-hero {
+            height: 80vh; display: flex; align-items: center; justify-content: center;
+            background: radial-gradient(circle at center, #1a0b2e 0%, #050505 100%); text-align: center;
+        }
+
+        .hero-content h1 { font-family: 'Outfit'; font-size: clamp(3rem, 8vw, 6rem); background: linear-gradient(to bottom, #fff 40%, var(--accent-audio)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
+        .catalog { padding: 80px 5%; max-width: 1400px; margin: 0 auto; }
+        .audio-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; }
+        .audio-card { background: var(--bg-card); border-radius: 24px; border: 1px solid var(--glass-border); transition: var(--transition); padding: 20px; }
+        .audio-card:hover { transform: translateY(-10px); border-color: var(--accent-audio); }
+
+        .product-img { height: 300px; display: flex; align-items: center; justify-content: center; }
+        .product-img img { width: 70%; transition: var(--transition); }
+
+        .tag { color: var(--accent-audio); font-size: 0.7rem; font-weight: 800; letter-spacing: 2px; }
+        .price { font-size: 1.5rem; font-weight: 700; }
+        
+        .buy-btn {
+            background: var(--text-white); color: #000; border: none; padding: 12px 25px; 
+            border-radius: 50px; font-weight: 700; cursor: pointer; transition: 0.3s;
+        }
+        .buy-btn:hover { background: var(--accent-audio); color: white; }
+
+        .cart-badge { background: var(--accent-audio); color: white; font-size: 10px; padding: 2px 6px; border-radius: 50%; position: absolute; top: -10px; right: -10px; }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="homezero.html" class="logo">.<span>OɹƎZ</span></a>
+        <div class="nav-icons">
+            <a href="checkautzero.html">
+                <i class="fa-solid fa-cart-shopping"></i>
+                <span id="cart-count" class="cart-badge">0</span>
+            </a>
+            
+        </div>
+    </nav>
+
+    <header class="audio-hero">
+        <div class="hero-content">
+            <h1>FEEL THE<br>VIBRATION.</h1>
+            <p style="color: var(--text-dim); margin-top: 20px;">Premium Audio Experience</p>
+        </div>
+    </header>
+
+    <main class="catalog">
+        <div class="audio-grid">
+            <div class="audio-card">
+                <div class="product-img"><img src="https://zerolifestyle.co/cdn/shop/files/811-white-1.webp?v=1733300591&width=700" alt="Sonic Max"></div>
+                <div class="product-details">
+                    <span class="tag">Flagship</span>
+                    <h3>Sonic Max Over-Ear</h3>
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-top:15px;">
+                        <span class="price">Rs. 14,999</span>
+                        <button class="buy-btn" onclick="addToCart('Sonic Max Over-Ear', 14999, 'https://zerolifestyle.co/cdn/shop/files/811-white-1.webp?v=1733300591&width=700')">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="audio-card">
+                <div class="product-img"><img src="https://zerolifestyle.co/cdn/shop/files/Arcade-900-Black-4.webp?v=1730962665&width=700" alt="Sonic Buds Pro"></div>
+                <div class="product-details">
+                    <span class="tag">Wireless</span>
+                    <h3>Sonic Buds Pro</h3>
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-top:15px;">
+                        <span class="price">Rs. 6,500</span>
+                        <button class="buy-btn" onclick="addToCart('Sonic Buds Pro', 6500, 'https://zerolifestyle.co/cdn/shop/files/Arcade-900-Black-4.webp?v=1730962665&width=700')">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        function addToCart(name, price, image) {
+            let cart = JSON.parse(localStorage.getItem("cart")) || [];
+            let existing = cart.find(i => i.name === name);
+            if (existing) { existing.qty += 1; } 
+            else { cart.push({ name, price, image, qty: 1 }); }
+            localStorage.setItem("cart", JSON.stringify(cart));
+            updateBadge();
+            alert("Item added! View in Checkout.");
+        }
+
+        function updateBadge() {
+            let cart = JSON.parse(localStorage.getItem("cart")) || [];
+            document.getElementById("cart-count").innerText = cart.length;
+        }
+        updateBadge();
+    </script>
+</body>
+</html>

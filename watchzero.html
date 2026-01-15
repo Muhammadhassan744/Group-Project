@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wearables | Zero Lifestyle</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Outfit:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg: #000000;
+            --watch-accent: #00d1ff; /* Electric Blue for Watches */
+            --card-bg: #0a0a0a;
+            --text-main: #ffffff;
+            --text-dim: #888;
+            --glass: rgba(255, 255, 255, 0.05);
+            --transition: all 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg);
+            color: var(--text-main);
+            overflow-x: hidden;
+        }
+
+        /* --- Hero Section --- */
+        .watch-hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            background: radial-gradient(circle at center, #001a2e 0%, #000 70%);
+            position: relative;
+        }
+
+        .watch-hero h1 {
+            font-family: 'Outfit';
+            font-size: clamp(4rem, 15vw, 10rem);
+            line-height: 0.8;
+            text-transform: uppercase;
+            letter-spacing: -4px;
+            opacity: 0.1;
+            position: absolute;
+            z-index: 1;
+        }
+
+        .main-watch-img {
+            z-index: 2;
+            width: 350px;
+            filter: drop-shadow(0 0 50px rgba(0, 209, 255, 0.2));
+            animation: watchFloat 4s ease-in-out infinite;
+        }
+
+        @keyframes watchFloat {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(2deg); }
+        }
+
+        /* --- Tech Specs Bar --- */
+        .tech-bar {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            padding: 30px 10%;
+            border-top: 1px solid var(--glass);
+        }
+
+        .tech-item { text-align: center; }
+        .tech-item h4 { font-family: 'Outfit'; color: var(--watch-accent); font-size: 1.5rem; }
+        .tech-item p { font-size: 0.7rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 1px; }
+
+        /* --- Feature Grid --- */
+        .grid-section {
+            padding: 100px 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .watch-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .watch-card {
+            background: var(--card-bg);
+            border-radius: 30px;
+            padding: 40px;
+            border: 1px solid var(--glass);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease, border-color 0.3s ease, filter 0.3s ease;
+            transition: 0.6s;
+            filter: grayscale(100) brightness(0.5);
+        }
+
+ 
+.watch-card:hover {
+    border-color: var(--watch-accent);
+    transform: translateY(-10px);
+    filter: grayscale(0) brightness(1.5);
+    letter-spacing: 5px;
+    color: #00d1ff;
+}
+
+.watch-card:hover p {
+    color: var(--text-dim);      
+    font-weight: 500;          
+    letter-spacing: 0px;
+           
+}
+
+
+        .watch-card img {
+            width: 100%;
+            height: 300px;
+            object-fit: contain;
+            margin-bottom: 30px;
+        }
+
+        .watch-card h3 { font-family: 'Outfit'; font-size: 1.8rem; margin-bottom: 10px; }
+        .watch-card .price { font-size: 1.2rem; color: var(--watch-accent); font-weight: 700; }
+
+        /* --- Health UI Section --- */
+        .health-dashboard {
+            background: #050505;
+            padding: 100px 10%;
+            display: flex;
+            align-items: center;
+            gap: 80px;
+        }
+
+        .ui-preview {
+            flex: 1;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .ui-card {
+            background: #111;
+            padding: 25px;
+            border-radius: 20px;
+            border-left: 4px solid var(--watch-accent);
+        }
+
+        .ui-card i { font-size: 1.5rem; color: var(--watch-accent); margin-bottom: 15px; display: block; }
+        .ui-card span { font-size: 2rem; font-weight: 800; display: block; }
+        .ui-card label { color: var(--text-dim); font-size: 0.8rem; text-transform: uppercase; }
+
+        .health-text { flex: 1; }
+        .health-text h2 { font-family: 'Outfit'; font-size: 3.5rem; margin-bottom: 20px; line-height: 1; }
+        .health-text p { color: var(--text-dim); font-size: 1.1rem; line-height: 1.8; }
+
+        .btn-buy {
+            margin-top: 30px;
+            padding: 18px 45px;
+            background: var(--watch-accent);
+            color: black;
+            border: none;
+            border-radius: 50px;
+            font-weight: 800;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: 0.3s;
+        }
+
+        .btn-buy:hover { box-shadow: 0 0 30px rgba(0, 209, 255, 0.4); transform: scale(1.05); }
+
+        @media (max-width: 900px) {
+            .health-dashboard { flex-direction: column; text-align: center; }
+            .tech-bar { grid-template-columns: 1fr 1fr; gap: 30px; }
+        }
+    </style>
+</head>
+<body>
+
+    <section class="watch-hero">
+        <h1>REGAL AI</h1>
+        <img src="https://zerolifestyle.co/cdn/shop/files/1_ee8ac544-ead9-49a7-84c0-9f8c4a75d15d.webp?v=1756127463&width=700" alt="Titan Watch" class="main-watch-img">
+        <p style="z-index: 2; margin-top: 20px; letter-spacing: 5px; color: var(--text-dim);">THE FUTURE ON YOUR WRIST</p>
+    </section>
+
+    <div class="tech-bar">
+        <div class="tech-item"><h4>1.96"</h4><p>AMOLED Display</p></div>
+        <div class="tech-item"><h4>IP68</h4><p>Water Resistant</p></div>
+        <div class="tech-item"><h4>15 Days</h4><p>Battery Life</p></div>
+        <div class="tech-item"><h4>100+</h4><p>Sports Modes</p></div>
+    </div>
+
+    <section class="grid-section">
+        <h2 style="font-family: 'Outfit'; font-size: 2.5rem; margin-bottom: 50px;">The Watch Collection</h2>
+        <div class="watch-grid">
+            
+            <div class="watch-card">
+                <img src="https://zerolifestyle.co/cdn/shop/files/lunar_Blue-Leather_1.webp?v=1764227871&width=700" alt="Watch">
+                <h3>Lunar 360 Smartwatch</h3>
+                <p style="color: var(--text-dim); margin-bottom: 10px;">Seamless aluminum unibody with a midnight fluorocarbon strap.</p>
+                <span class="price">Rs. 8,500</span>
+            </div>
+            
+
+            <div class="watch-card">
+                <img src="https://zerolifestyle.co/cdn/shop/files/1_d8b06a71-8b9c-4564-8344-11b83b4ca7b3.webp?v=1766048642&width=700" alt="Watch">
+                <h3>Navigator Smartwatch</h3>
+                <p style="color: var(--text-dim); margin-bottom: 20px;">Brushed titanium finish with sapphire crystal glass protection.</p>
+                <span class="price">Rs. 12,999</span>
+            </div>
+
+            <div class="watch-card">
+                <img src="https://zerolifestyle.co/cdn/shop/files/Vogue_Silver_0000.webp?v=1742632877&width=700" alt="Watch">
+                <h3>Vogue Smartwatch</h3>
+                <p style="color: var(--text-dim); margin-bottom: 20px;">Rugged design built for the extreme outdoors and athletes.</p>
+                <span class="price">Rs. 9,999</span>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="health-dashboard">
+        <div class="ui-preview">
+            <div class="ui-card">
+                <i class="fa-solid fa-heart-pulse"></i>
+                <span>72</span>
+                <label>Beats Per Min</label>
+            </div>
+            <div class="ui-card">
+                <i class="fa-solid fa-droplet"></i>
+                <span>98%</span>
+                <label>SpO2 Level</label>
+            </div>
+            <div class="ui-card">
+                <i class="fa-solid fa-fire"></i>
+                <span>450</span>
+                <label>Kcal Burned</label>
+            </div>
+            <div class="ui-card">
+                <i class="fa-solid fa-bed"></i>
+                <span>8h 20m</span>
+                <label>Sleep Quality</label>
+            </div>
+        </div>
+        <div class="health-text">
+            <h2>YOUR BODY.<br>IN REAL-TIME.</h2>
+            <p>Advanced bio-sensors monitor your vital signs 24/7. Get deep insights into your health, sleep patterns, and stress levels with the Zero Lifestyle App sync.</p>
+            <button class="btn-buy">Shop Titan Series</button>
+        </div>
+    </section>
+
+    <footer style="padding: 60px; text-align: center; border-top: 1px solid var(--glass);">
+        <p style="color: var(--text-dim); font-size: 0.8rem;">&copy; 2026 ZERO LIFESTYLE WEARABLES DEPT.</p>
+    </footer>
+<script src="script.js"></script>
+</body>
+</html>

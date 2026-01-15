@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zero Lifestyle | Elevate Your Tech</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Outfit:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg-dark: #000000;
+            --card-bg: #0a0a0a;
+            --accent: #00ffcc; 
+            --accent-glow: rgba(0, 255, 204, 0.3);
+            --text-main: #ffffff;
+            --text-dim: #a0a0a0;
+            --glass: rgba(255, 255, 255, 0.05);
+            --transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* --- Navigation --- */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 20px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid var(--glass);
+        }
+
+        .logo {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.5rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            transition: transform 0.6s ease;
+            cursor: pointer;
+        }
+
+        .logo:hover { transform: rotate(180deg); }
+        .logo span { color: var(--accent); }
+
+        .nav-links { display: flex; gap: 30px; }
+        .nav-links a {
+            color: var(--text-dim);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+            text-shadow: 0 0 10px var(--accent-glow);
+            letter-spacing: 2px;
+        }
+
+        /* --- Hero Section with Video --- */
+        .hero {
+            height: 85vh;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .hero-video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            z-index: 0;
+            transform: translate(-50%, -50%);
+            object-fit: cover;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6); /* Text ko highlight karne ke liye dark layer */
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            padding: 0 20px;
+        }
+
+        .hero h2 {
+            font-family: 'Outfit', sans-serif;
+            font-size: clamp(2.5rem, 8vw, 5rem);
+            line-height: 1.1;
+            margin-bottom: 20px;
+            transition: 0.6s;
+        }
+
+        .hero h2:hover {
+            letter-spacing: 10px;
+            color: var(--accent);
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            color: var(--text-dim);
+            max-width: 600px;
+            margin: 0 auto 35px;
+        }
+
+        .btn-pro {
+            display: inline-block;
+            padding: 15px 40px;
+            background: var(--accent);
+            color: #000;
+            text-decoration: none;
+            font-weight: 700;
+            border-radius: 4px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: var(--transition);
+        }
+
+        .btn-pro:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 30px var(--accent-glow);
+        }
+
+        /* --- Product Grid --- */
+        .container {
+            max-width: 1200px;
+            margin: 80px auto;
+            padding: 0 5%;
+        }
+
+        .section-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 2rem;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .product-card {
+            background: var(--card-bg);
+            border: 1px solid var(--glass);
+            border-radius: 12px;
+            padding: 25px;
+            text-align: center;
+            transition: var(--transition);
+        }
+
+        .product-card img {
+            width: 100%;
+            height: 220px;
+            object-fit: contain;
+            margin-bottom: 20px;
+            filter: brightness(0.8);
+            transition: 0.5s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--accent);
+            box-shadow: 0 10px 30px rgba(0, 255, 204, 0.1);
+        }
+
+        .product-card:hover img {
+            filter: brightness(1);
+            transform: scale(1.05);
+        }
+
+        .price {
+            color: var(--accent);
+            font-weight: 800;
+            font-size: 1.2rem;
+            margin: 10px 0;
+        }
+
+        /* --- Footer --- */
+        footer {
+            padding: 60px 5%;
+            background: #050505;
+            border-top: 1px solid var(--glass);
+            text-align: center;
+        }
+
+        .social-icons {
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .social-icons a { color: var(--text-dim); font-size: 1.5rem; transition: 0.3s; }
+        .social-icons a:hover { color: var(--accent); }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .hero h2 { font-size: 3rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="logo">.<span>OɹƎZ</span></div>
+        <div class="nav-links">
+            <a href="cellectionzero.html">Collections</a>
+        </div>
+        <div>
+            <a href="checkautzero.html" style="color: white;"><i class="fa-solid fa-cart-shopping"></i></a>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <video autoplay muted loop playsinline class="hero-video">
+            <source src="https://static.videezy.com/system/resources/previews/000/005/089/original/Particle_Wave_4K_Motion_Background_Loop.mp4" type="video/mp4">
+        </video>
+        <div class="hero-overlay"></div>
+        
+        <div class="hero-content">
+            <h2>STARTS AT ZERO.</h2>
+            <p>Experience the next generation of smart wearables and high-performance tech accessories designed for the modern lifestyle.</p>
+            <a href="explorercellectionzero.html" class="btn-pro">Explore Collection</a>
+        </div>
+    </section>
+
+    <div class="container" id="shop">
+        <h2 class="section-title">New Arrivals</h2>
+        <div class="products-grid">
+            
+            <div class="product-card">
+                <img src="https://zerolifestyle.co/cdn/shop/files/01_fdba08f1-6dfb-44a1-bfe7-462b8adc9d5b.webp?v=1734678583&width=700" alt="Titan Pro">
+                <h3>Titan Pro Gen 3</h3>
+                <div class="price">Rs. 8,999</div>
+                <p>AMOLED Display | Stainless Steel Body</p>
+                <a href="#" style="text-decoration: none; color: var(--accent); font-size: 0.9rem; font-weight: 600;">View Details</a>
+            </div>
+
+            <div class="product-card">
+                <img src="https://zerolifestyle.co/cdn/shop/files/black_fcaf71c1-6cde-47de-b5f7-b1044c04b2fe.webp?v=1741777839&width=700" alt="Sonic Buds">
+                <h3>Sonic Buds X</h3>
+                <div class="price">Rs. 4,500</div>
+                <p>ANC | Spatial Audio | IPX7</p>
+                <a href="#" style="text-decoration: none; color: var(--accent); font-size: 0.9rem; font-weight: 600;">View Details</a>
+            </div>
+
+            <div class="product-card">
+                <img src="https://zerolifestyle.co/cdn/shop/files/Black_4_c986e7b0-a61c-41d3-a8ce-4a469882bade.webp?v=1752432598&width=700" alt="Volt Master">
+                <h3>Volt Master 20K</h3>
+                <div class="price">Rs. 5,200</div>
+                <p>65W PD Fast Charging | Triple Port</p>
+                <a href="#" style="text-decoration: none; color: var(--accent); font-size: 0.9rem; font-weight: 600;">View Details</a>
+            </div>
+
+        </div>
+    </div>
+
+    <footer>
+        <div class="social-icons">
+            <a href="#"><i class="fa-brands fa-instagram"></i></a>
+            <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
+            <a href="#"><i class="fa-brands fa-facebook"></i></a>
+        </div>
+        <p style="color: var(--text-dim); font-size: 0.8rem;">&copy; 2026 ZERO LIFESTYLE. ENGINEERED FOR PERFORMANCE.</p>
+    </footer>
+
+</body>
+</html>
